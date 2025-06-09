@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from app.routers import asistencia
 from app.db import init_db, test_connection
 
-app = FastAPI(title="Attendance API")
+app = FastAPI(title="Asistencia API")
 
 @app.on_event("startup")
 def startup_event():
