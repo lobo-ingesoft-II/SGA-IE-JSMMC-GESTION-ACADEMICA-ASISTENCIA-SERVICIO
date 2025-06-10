@@ -13,3 +13,13 @@
 ### Corregido
 - Validación adicional para la fecha en el registro de asistencia.
 - Mejora en los mensajes de error para registros no encontrados.
+
+## [1.0.2] - 2025-06-10
+### Corregido
+- Correción del puerto en README.md a 8002.
+### Cambiado
+- Se añadieron claves foráneas (FKs) en el modelo de asistencia.
+- El atributo `presente` ahora solo acepta los valores 1 (Presente), 2 (No Asistió), y 3 (Justificado).
+- Se ajusta readme.
+### Agregado
+- Adición de sección documentación interactiva.
