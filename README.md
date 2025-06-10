@@ -4,6 +4,11 @@
 
 Este servicio permite gestionar la asistencia de los estudiantes en el sistema académico. Proporciona funcionalidades para registrar, obtener y listar asistencias, así como consultar la asistencia por curso, estudiante o fecha. Facilita la integración con otros módulos del sistema académico.
 
+- **presente:**  
+  - `"1"` = Presente  
+  - `"2"` = No Asistió  
+  - `"3"` = Justificado
+
 ## Endpoints
 
 ### Registrar asistencia
@@ -15,9 +20,12 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
 ```json
 {
     "id_estudiante": 1,
+    "id_profesor": 5,
     "id_curso": 2,
+    "id_asignatura": 3,
     "fecha": "2024-06-10",
-    "presente": true
+    "presente": "1",
+    "observaciones": "Llegó tarde"
 }
 ```
 
@@ -29,9 +37,12 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
 {
     "id_asistencia": 1,
     "id_estudiante": 1,
+    "id_profesor": 5,
     "id_curso": 2,
+    "id_asignatura": 3,
     "fecha": "2024-06-10",
-    "presente": true
+    "presente": "1",
+    "observaciones": "Llegó tarde"
 }
 ```
 
@@ -47,9 +58,12 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
 {
     "id_asistencia": 1,
     "id_estudiante": 1,
+    "id_profesor": 5,
     "id_curso": 2,
+    "id_asignatura": 3,
     "fecha": "2024-06-10",
-    "presente": true
+    "presente": "1",
+    "observaciones": "Llegó tarde"
 }
 ```
 
@@ -74,79 +88,14 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
     {
         "id_asistencia": 1,
         "id_estudiante": 1,
+        "id_profesor": 5,
         "id_curso": 2,
+        "id_asignatura": 3,
         "fecha": "2024-06-10",
-        "presente": true
-    },
-    {
-        "id_asistencia": 2,
-        "id_estudiante": 2,
-        "id_curso": 2,
-        "fecha": "2024-06-10",
-        "presente": false
+        "presente": "1",
+        "observaciones": "Llegó tarde"
     }
 ]
-```
-
-### Consultar asistencias por estudiante
-
-**GET** `/asistencias/estudiante/{id_estudiante}`
-
-#### Response
-
-**Status:** 200 OK
-
-```json
-[
-    {
-        "id_asistencia": 1,
-        "id_estudiante": 1,
-        "id_curso": 2,
-        "fecha": "2024-06-10",
-        "presente": true
-    }
-]
-```
-
-### Consultar asistencias por curso
-
-**GET** `/asistencias/curso/{id_curso}`
-
-#### Response
-
-**Status:** 200 OK
-
-```json
-[
-    {
-        "id_asistencia": 1,
-        "id_estudiante": 1,
-        "id_curso": 2,
-        "fecha": "2024-06-10",
-        "presente": true
-    }
-]
-```
-
-### Consultar asistencias por fecha
-
-**GET** `/asistencias/fecha/{fecha}`
-
-#### Response
-
-**Status:** 200 OK
-
-```json
-[
-    {
-        "id_asistencia": 1,
-        "id_estudiante": 1,
-        "id_curso": 2,
-        "fecha": "2024-06-10",
-        "presente": true
-    }
-]
-```
 
 ## Instalación
 
@@ -163,7 +112,7 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
 3. Ejecuta el servidor:
 
     ```bash
-    uvicorn app.main:app --reload
+    uvicorn app.main:app --reload --port 8002
     ```
 
 ## Pruebas
@@ -183,3 +132,7 @@ pytest app/tests/test_asistencia.py
 ## Contacto
 
 Para más información, contactar con el equipo de desarrollo.
+
+## Documentación interactiva
+
+Accede a la documentación Swagger en [http://localhost:8002/docs](http://localhost:8002/docs) o ReDoc en [http://localhost:8002/redoc](http://localhost:8002/redoc).
