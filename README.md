@@ -97,7 +97,7 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
     }
 ]
 
-### 🔍 Consultar Asistencias por Estudiante
+###  Consultar Asistencias por Estudiante
 
 **Endpoint:** `GET /asistencia/estudiante/{id_estudiante}`
 
