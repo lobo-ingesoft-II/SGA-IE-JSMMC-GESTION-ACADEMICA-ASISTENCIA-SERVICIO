@@ -10,5 +10,5 @@ class Asistencia(Base):
     id_curso = Column(Integer, nullable=False)
     id_asignatura = Column(Integer, nullable=False)
     fecha = Column(Date, nullable=False)
-    presente = Column(String(1), nullable=False)  # Valores: 1 (Presente), 2 (No Asistió), y 3 (Justificado).
+    presente = Column(Integer, nullable=False)  # Valores: 1 (Presente), 2 (No Asistió), y 3 (Justificado).
     observaciones = Column(String, nullable=True)

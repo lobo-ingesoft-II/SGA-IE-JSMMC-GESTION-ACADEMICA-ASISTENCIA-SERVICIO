@@ -7,7 +7,7 @@ class AsistenciaBase(BaseModel):
     id_curso: int
     id_asignatura: int
     fecha: date
-    presente: str
+    presente: int
     observaciones: str | None
 
 class AsistenciaCreate(AsistenciaBase):
