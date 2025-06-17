@@ -96,7 +96,7 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
         "observaciones": "Llegó tarde"
     }
 ]
-
+```
 ###  Consultar Asistencias por Estudiante
 
 **Endpoint:** `GET /asistencia/estudiante/{id_estudiante}`
@@ -122,13 +122,7 @@ Devuelve un listado de todas las asistencias registradas para un estudiante espe
     "estado": "Ausente"
   }
 ]
-
-### Respuesta si el estudiante no tiene registros (`404 Not Found`):
-```json
-{
-  "detail": "No se encontraron registros de asistencia para el estudiante con ID 42"
-}
-
+```
 ## Instalación
 
 1. Asegúrate de tener el entorno configurado:
