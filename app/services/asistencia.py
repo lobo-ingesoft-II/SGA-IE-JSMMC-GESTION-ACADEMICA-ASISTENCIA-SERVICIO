@@ -14,3 +14,14 @@ def get_asistencia(db: Session, id_asistencia: int):
 
 def list_asistencia(db: Session):
     return db.query(Asistencia).all()
+
+def list_asistencia_by_estudiante(db: Session, id_estudiante: int):
+    """
+    Devuelve todas las entradas de asistencia para un estudiante dado.
+    """
+    return (
+        db
+        .query(Asistencia)
+        .filter(Asistencia.id_estudiante == id_estudiante)
+        .all()
+    )
