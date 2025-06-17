@@ -97,6 +97,38 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
     }
 ]
 
+### 🔍 Consultar Asistencias por Estudiante
+
+**Endpoint:** `GET /asistencia/estudiante/{id_estudiante}`
+
+Devuelve un listado de todas las asistencias registradas para un estudiante específico identificado por su ID.
+
+#### Parámetros de ruta:
+- `id_estudiante` (int): ID único del estudiante.
+
+#### Respuesta exitosa (`200 OK`):
+```json
+[
+  {
+    "id": 1,
+    "fecha": "2025-06-17",
+    "id_estudiante": 42,
+    "estado": "Presente"
+  },
+  {
+    "id": 2,
+    "fecha": "2025-06-18",
+    "id_estudiante": 42,
+    "estado": "Ausente"
+  }
+]
+
+### Respuesta si el estudiante no tiene registros (`404 Not Found`):
+```json
+{
+  "detail": "No se encontraron registros de asistencia para el estudiante con ID 42"
+}
+
 ## Instalación
 
 1. Asegúrate de tener el entorno configurado:
