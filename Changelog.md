@@ -26,3 +26,4 @@
 ## [1.1.0] - 2025-06-17
 ### Agregado
 - Nuevo endpoint `GET /asistencia/estudiante/{id_estudiante}` para consultar todas las asistencias registradas de un estudiante específico.
+- Documentación del funcionamiento del endpoint en el README
