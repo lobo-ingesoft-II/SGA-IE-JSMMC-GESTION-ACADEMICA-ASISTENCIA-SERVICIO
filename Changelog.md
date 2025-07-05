@@ -23,7 +23,20 @@
 - Se ajusta readme.
 ### Agregado
 - Adición de sección documentación interactiva.
+<<<<<<< Updated upstream
 ## [1.1.0] - 2025-06-17
 ### Agregado
 - Nuevo endpoint `GET /asistencia/estudiante/{id_estudiante}` para consultar todas las asistencias registradas de un estudiante específico.
 - Documentación del funcionamiento del endpoint en el README
+=======
+
+## [1.1.0] - 2025-07-05
+### Agregado
+- Endpoints para listar asistencias por estudiante, curso y fecha.
+- Validaciones externas para estudiante, profesor, curso y asignatura.
+- Mejor documentación Swagger en los endpoints.
+
+### Cambiado
+- Se mejoró la modularidad y separación de responsabilidades siguiendo SOFEA.
+- Se actualizó requirements.txt para incluir httpx.
+>>>>>>> Stashed changes

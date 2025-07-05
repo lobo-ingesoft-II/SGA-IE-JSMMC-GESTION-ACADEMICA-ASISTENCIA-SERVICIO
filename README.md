@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Este servicio permite gestionar la asistencia de los estudiantes en el sistema académico. Proporciona funcionalidades para registrar, obtener y listar asistencias, así como consultar la asistencia por curso, estudiante o fecha. Facilita la integración con otros módulos del sistema académico.
+Este servicio permite gestionar la asistencia de los estudiantes en el sistema académico. Proporciona funcionalidades para registrar, obtener y listar asistencias, así como consultar la asistencia por curso, estudiante o fecha. Integra validaciones externas para asegurar la integridad de los datos.
 
 - **presente:**  
   - `"1"` = Presente  
@@ -13,7 +13,9 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
 
 ### Registrar asistencia
 
-**POST** `/asistencias/`
+**POST** `/asistencia/`
+
+Valida que el estudiante, profesor, curso y asignatura existan en sus respectivos servicios antes de registrar la asistencia.
 
 #### Request Body
 
@@ -48,7 +50,7 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
 
 ### Obtener asistencia por ID
 
-**GET** `/asistencias/{id_asistencia}`
+**GET** `/asistencia/{id_asistencia}`
 
 #### Response
 
@@ -77,7 +79,7 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
 
 ### Listar todas las asistencias
 
-**GET** `/asistencias/`
+**GET** `/asistencia/`
 
 #### Response
 
@@ -97,7 +99,29 @@ Este servicio permite gestionar la asistencia de los estudiantes en el sistema a
     }
 ]
 ```
+<<<<<<< Updated upstream
 ###  Consultar Asistencias por Estudiante
+=======
+
+### Listar asistencias por estudiante
+
+**GET** `/asistencia/por_estudiante/{id_estudiante}`
+
+### Listar asistencias por curso
+
+**GET** `/asistencia/por_curso/{id_curso}`
+
+### Listar asistencias por fecha
+
+**GET** `/asistencia/por_fecha/{fecha}`
+
+## Validaciones externas
+
+- **id_estudiante**: Valida contra el API de Estudiantes.
+- **id_profesor**: Valida contra el API de Autenticación.
+- **id_curso**: Valida contra el API de Cursos.
+- **id_asignatura**: Valida contra el API de Asignaturas.
+>>>>>>> Stashed changes
 
 **Endpoint:** `GET /asistencia/estudiante/{id_estudiante}`
 
@@ -125,39 +149,18 @@ Devuelve un listado de todas las asistencias registradas para un estudiante espe
 ```
 ## Instalación
 
-1. Asegúrate de tener el entorno configurado:
-
+1. Instala dependencias:
     ```bash
     pip install -r requirements.txt
     ```
 2. Configura la base de datos en el archivo `.env`:
-
     ```env
-    DATABASE_URL="mysql+pymysql://user:password@host:port/database"
+    DATABASE_URL="mysql+pymysql://user:password@host:port/asistencia_db"
     ```
 3. Ejecuta el servidor:
-
     ```bash
     uvicorn app.main:app --reload --port 8002
     ```
-
-## Pruebas
-
-Para ejecutar las pruebas unitarias:
-
-```bash
-pytest app/tests/test_asistencia.py
-```
-
-## Dependencias
-
-* **FastAPI**: Framework principal.
-* **SQLAlchemy**: ORM para manejar la base de datos.
-* **Pytest**: Framework para pruebas unitarias.
-
-## Contacto
-
-Para más información, contactar con el equipo de desarrollo.
 
 ## Documentación interactiva
 
