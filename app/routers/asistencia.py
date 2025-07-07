@@ -1,16 +1,16 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.schemas.asistencia import AsistenciaCreate, AsistenciaResponse
-<<<<<<< Updated upstream
-from app.services.asistencia import create_asistencia, get_asistencia, list_asistencia, list_asistencia_by_estudiante
-=======
-from app.services.asistencia import (
-    create_asistencia, get_asistencia, list_asistencia,
-    list_asistencia_por_estudiante, list_asistencia_por_curso, list_asistencia_por_fecha
-)
->>>>>>> Stashed changes
 from app.db import SessionLocal
 from datetime import date
+from app.services.asistencia import (
+    create_asistencia,
+    get_asistencia,
+    list_asistencia,
+    list_asistencia_por_estudiante,
+    list_asistencia_por_curso,
+    list_asistencia_por_fecha
+)
 
 router = APIRouter()
 
@@ -40,30 +40,6 @@ def get(id_asistencia: int, db: Session = Depends(get_db)):
 
 @router.get("/", response_model=list[AsistenciaResponse], summary="Listar todas las asistencias", tags=["Asistencia"])
 def list_all(db: Session = Depends(get_db)):
-<<<<<<< Updated upstream
-    return list_asistencia(db)
-
-@router.get(
-    "/estudiante/{id_estudiante}",
-    response_model=list[AsistenciaResponse],
-    summary="Listar todas las asistencias de un estudiante por su ID",
-)
-def read_asistencias_por_estudiante(
-    id_estudiante: int,
-    db: Session = Depends(get_db),
-):
-    """
-    Devuelve todas las asistencias del estudiante cuyo ID se pasa en la ruta.
-    Lanza un error 404 si el estudiante no tiene registros de asistencia.
-    """
-    asistencias = list_asistencia_by_estudiante(db, id_estudiante)
-    if not asistencias:
-        raise HTTPException(
-            status_code=404,
-            detail=f"No se encontraron registros de asistencia para el estudiante con ID {id_estudiante}"
-        )
-    return asistencias
-=======
     """
     Lista todas las asistencias registradas.
     """
@@ -89,4 +65,3 @@ def list_by_fecha(fecha: date, db: Session = Depends(get_db)):
     Lista todas las asistencias de una fecha específica.
     """
     return list_asistencia_por_fecha(db, fecha)
->>>>>>> Stashed changes

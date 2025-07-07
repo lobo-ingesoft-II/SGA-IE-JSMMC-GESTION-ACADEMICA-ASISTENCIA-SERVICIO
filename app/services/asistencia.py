@@ -2,7 +2,10 @@ from sqlalchemy.orm import Session
 from app.models.asistencia import Asistencia
 from app.schemas.asistencia import AsistenciaCreate
 from app.services.validaciones_externas import (
-    validar_estudiante, validar_profesor, validar_curso, validar_asignatura
+    validar_estudiante,
+    validar_profesor,
+    validar_curso,
+    validar_asignatura
 )
 import asyncio
 
@@ -25,18 +28,6 @@ def get_asistencia(db: Session, id_asistencia: int):
 def list_asistencia(db: Session):
     return db.query(Asistencia).all()
 
-<<<<<<< Updated upstream
-def list_asistencia_by_estudiante(db: Session, id_estudiante: int):
-    """
-    Devuelve todas las entradas de asistencia para un estudiante dado.
-    """
-    return (
-        db
-        .query(Asistencia)
-        .filter(Asistencia.id_estudiante == id_estudiante)
-        .all()
-    )
-=======
 def list_asistencia_por_estudiante(db: Session, id_estudiante: int):
     return db.query(Asistencia).filter(Asistencia.id_estudiante == id_estudiante).all()
 
@@ -45,4 +36,3 @@ def list_asistencia_por_curso(db: Session, id_curso: int):
 
 def list_asistencia_por_fecha(db: Session, fecha):
     return db.query(Asistencia).filter(Asistencia.fecha == fecha).all()
->>>>>>> Stashed changes
