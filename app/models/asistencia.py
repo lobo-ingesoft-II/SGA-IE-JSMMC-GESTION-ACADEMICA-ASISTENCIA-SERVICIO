@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, CheckConstraint
 from app.db import Base
 
 class Asistencia(Base):
@@ -12,3 +12,7 @@ class Asistencia(Base):
     fecha = Column(Date, nullable=False)
     presente = Column(Integer, nullable=False)  # Valores: 1 (Presente), 2 (No Asistió), y 3 (Justificado).
     observaciones = Column(String, nullable=True)
+    
+    __table_args__ = (
+        CheckConstraint('presente IN (1, 2, 3)', name='check_presente_valid'),
+    )
