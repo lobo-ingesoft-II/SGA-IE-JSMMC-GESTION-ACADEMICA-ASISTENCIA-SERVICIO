@@ -99,9 +99,6 @@ Valida que el estudiante, profesor, curso y asignatura existan en sus respectivo
     }
 ]
 ```
-<<<<<<< Updated upstream
-###  Consultar Asistencias por Estudiante
-=======
 
 ### Listar asistencias por estudiante
 
@@ -121,7 +118,6 @@ Valida que el estudiante, profesor, curso y asignatura existan en sus respectivo
 - **id_profesor**: Valida contra el API de Autenticación.
 - **id_curso**: Valida contra el API de Cursos.
 - **id_asignatura**: Valida contra el API de Asignaturas.
->>>>>>> Stashed changes
 
 **Endpoint:** `GET /asistencia/estudiante/{id_estudiante}`
 
