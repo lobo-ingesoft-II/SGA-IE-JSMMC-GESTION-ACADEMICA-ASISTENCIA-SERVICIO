@@ -1,14 +1,18 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, CheckConstraint
 from app.db import Base
 
 class Asistencia(Base):
     __tablename__ = "asistencia"
 
     id_asistencia = Column(Integer, primary_key=True, index=True)
-    id_estudiante = Column(Integer, ForeignKey("estudiantes.id_estudiante"), nullable=False)
-    id_profesor = Column(Integer, ForeignKey("profesores.id_profesor"), nullable=False)
-    id_curso = Column(Integer, ForeignKey("cursos.id_curso"), nullable=False)
-    id_asignatura = Column(Integer, ForeignKey("asignaturas.id_asignatura"), nullable=False)
+    id_estudiante = Column(Integer, nullable=False)
+    id_profesor = Column(Integer, nullable=False)
+    id_curso = Column(Integer, nullable=False)
+    id_asignatura = Column(Integer, nullable=False)
     fecha = Column(Date, nullable=False)
-    presente = Column(String(1), nullable=False)  # Valores: "A", "F", "J"
+    presente = Column(Integer, nullable=False)  # Valores: 1 (Presente), 2 (No Asistió), y 3 (Justificado).
     observaciones = Column(String, nullable=True)
+    
+    __table_args__ = (
+        CheckConstraint('presente IN (1, 2, 3)', name='check_presente_valid'),
+    )
