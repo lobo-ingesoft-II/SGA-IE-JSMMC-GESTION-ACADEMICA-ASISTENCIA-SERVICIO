@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from app.schemas.asistencia import AsistenciaCreate, AsistenciaUpdate, AsistenciaResponse
 from app.db import SessionLocal
@@ -13,8 +13,22 @@ from app.services.asistencia import (
     list_asistencia_por_fecha,
     get_asistencia_por_estudiante_y_fecha
 )
+from app.observabilidad.observabilidad import prometheus_metrics, REQUEST_COUNT, REQUEST_LATENCY, ERROR_COUNT
+from prometheus_client import CollectorRegistry, generate_latest, CONTENT_TYPE_LATEST
+from starlette.responses import Response
 
 router = APIRouter()
+
+@router.get("/custom_metrics", tags=["Observabilidad"])
+def custom_metrics():
+    """
+    Expone las métricas personalizadas de Prometheus para el servicio de asistencia.
+    """
+    registry = CollectorRegistry()
+    registry.register(REQUEST_COUNT)
+    registry.register(REQUEST_LATENCY)
+    registry.register(ERROR_COUNT)
+    return Response(generate_latest(registry), media_type=CONTENT_TYPE_LATEST)
 
 def get_db():
     db = SessionLocal()
@@ -24,7 +38,8 @@ def get_db():
         db.close()
 
 @router.post("/", response_model=AsistenciaResponse, summary="Registrar asistencia", tags=["Asistencia"])
-async def create(asistencia: AsistenciaCreate, db: Session = Depends(get_db)):
+@prometheus_metrics("create_asistencia")
+async def create(asistencia: AsistenciaCreate, db: Session = Depends(get_db), request: Request = None):
     """
     Registra una nueva asistencia después de validar los datos externos.
     
@@ -49,7 +64,8 @@ async def create(asistencia: AsistenciaCreate, db: Session = Depends(get_db)):
     return await create_asistencia(db, asistencia)
 
 @router.put("/{id_asistencia}", response_model=AsistenciaResponse, summary="Actualizar asistencia", tags=["Asistencia"])
-async def update(id_asistencia: int, asistencia_update: AsistenciaUpdate, db: Session = Depends(get_db)):
+@prometheus_metrics("update_asistencia")
+async def update(id_asistencia: int, asistencia_update: AsistenciaUpdate, db: Session = Depends(get_db), request: Request = None):
     """
     Actualiza un registro de asistencia existente.
     
@@ -85,7 +101,8 @@ async def update(id_asistencia: int, asistencia_update: AsistenciaUpdate, db: Se
     return await update_asistencia(db, id_asistencia, asistencia_update)
 
 @router.get("/{id_asistencia}", response_model=AsistenciaResponse, summary="Obtener asistencia por ID", tags=["Asistencia"])
-def get(id_asistencia: int, db: Session = Depends(get_db)):
+@prometheus_metrics("get_asistencia")
+async def get(id_asistencia: int, db: Session = Depends(get_db), request: Request = None):
     """
     Obtiene un registro de asistencia por su ID.
     """
@@ -95,21 +112,24 @@ def get(id_asistencia: int, db: Session = Depends(get_db)):
     return db_asistencia
 
 @router.get("/", response_model=list[AsistenciaResponse], summary="Listar todas las asistencias", tags=["Asistencia"])
-def list_all(db: Session = Depends(get_db)):
+@prometheus_metrics("list_asistencia")
+async def list_all(db: Session = Depends(get_db), request: Request = None):
     """
     Lista todas las asistencias registradas.
     """
     return list_asistencia(db)
 
 @router.get("/por_estudiante/{id_estudiante}", response_model=list[AsistenciaResponse], summary="Listar asistencias por estudiante", tags=["Asistencia"])
-def list_by_estudiante(id_estudiante: int, db: Session = Depends(get_db)):
+@prometheus_metrics("list_asistencia_por_estudiante")
+async def list_by_estudiante(id_estudiante: int, db: Session = Depends(get_db), request: Request = None):
     """
     Lista todas las asistencias de un estudiante.
     """
     return list_asistencia_por_estudiante(db, id_estudiante)
 
 @router.get("/por_estudiante/{id_estudiante}/fecha/{fecha}", response_model=list[AsistenciaResponse], summary="Obtener asistencia por estudiante y fecha", tags=["Asistencia"])
-def get_by_estudiante_and_fecha(id_estudiante: int, fecha: date, db: Session = Depends(get_db)):
+@prometheus_metrics("get_asistencia_por_estudiante_y_fecha")
+async def get_by_estudiante_and_fecha(id_estudiante: int, fecha: date, db: Session = Depends(get_db), request: Request = None):
     """
     Obtiene los registros de asistencia de un estudiante específico en una fecha específica.
     
@@ -135,14 +155,16 @@ def get_by_estudiante_and_fecha(id_estudiante: int, fecha: date, db: Session = D
     return asistencias
 
 @router.get("/por_curso/{id_curso}", response_model=list[AsistenciaResponse], summary="Listar asistencias por curso", tags=["Asistencia"])
-def list_by_curso(id_curso: int, db: Session = Depends(get_db)):
+@prometheus_metrics("list_asistencia_por_curso")
+async def list_by_curso(id_curso: int, db: Session = Depends(get_db), request: Request = None):
     """
     Lista todas las asistencias de un curso.
     """
     return list_asistencia_por_curso(db, id_curso)
 
-@router.get("/valores-validos", summary="Obtener valores válidos para asistencia", tags=["Asistencia"])
-def get_valores_validos():
+@router.get("_val/valores-validos", summary="Obtener valores válidos para asistencia", tags=["Asistencia"])
+@prometheus_metrics("get_valores_validos")
+async def get_valores_validos(request: Request = None):
     """
     Obtiene la información sobre los valores válidos para el campo 'presente'.
     """
@@ -156,7 +178,8 @@ def get_valores_validos():
     }
 
 @router.get("/por_fecha/{fecha}", response_model=list[AsistenciaResponse], summary="Listar asistencias por fecha", tags=["Asistencia"])
-def list_by_fecha(fecha: date, db: Session = Depends(get_db)):
+@prometheus_metrics("list_asistencia_por_fecha")
+async def list_by_fecha(fecha: date, db: Session = Depends(get_db), request: Request = None):
     """
     Lista todas las asistencias de una fecha específica.
     """

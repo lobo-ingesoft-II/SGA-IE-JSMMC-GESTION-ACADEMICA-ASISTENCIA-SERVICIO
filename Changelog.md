@@ -37,3 +37,18 @@
 ## [1.0.4] - 2025-07-07
 ### Corregido
 - Se hacen ajustes/correcciones en archivos routers/asistencia.py, services/asistencia.py y validaciones_externas.py
+
+## [1.0.5] - 2025-07-17
+### Agregado
+- Implementación del middleware de observabilidad con Prometheus en `observabilidad/observabilidad.py`.
+- Decorador `@prometheus_metrics` aplicado a **todos los endpoints** del router de asistencia para recolectar métricas HTTP (conteo y duración).
+- Métricas exportadas en el endpoint `/metrics`.
+- Nuevas pruebas unitarias agregadas en `app/tests/test_asistencia.py`, cubriendo casos de éxito y error para creación, consulta individual, consulta múltiple, y endpoints adicionales.
+- Endpoint `/asistencia/valores-validos` documentado y probado, que devuelve los valores permitidos para el campo `presente`.
+- Se agregó documentación Swagger detallada en todos los endpoints, con ejemplos y respuestas esperadas.
+- Se refactorizó la validación externa para estudiante, profesor, curso y asignatura como funciones asíncronas.
+
+### Cambiado
+- Todos los endpoints ahora utilizan funciones `async def` para soportar mejor concurrencia y observabilidad.
+- El router `asistencia.py` fue modularizado según principios SOFEA, separando responsabilidades y mejorando la legibilidad del código.
+- Documentación enriquecida con descripciones y ejemplos para facilitar el uso de la API desde Swagger/OpenAPI.

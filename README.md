@@ -143,6 +143,30 @@ Devuelve un listado de todas las asistencias registradas para un estudiante espe
   }
 ]
 ```
+## Endpoints
+
+...
+
+### Obtener valores válidos para el campo `presente`
+
+**GET** `/asistencia/valores-validos`
+
+Devuelve los valores aceptados por el campo `presente`:
+
+#### Response
+
+**Status:** 200 OK
+
+```json
+{
+    "valores_validos": {
+        "1": "Presente",
+        "2": "No Asistió",
+        "3": "Justificado"
+    }
+}
+```
+
 ## Instalación
 
 1. Instala dependencias:
@@ -161,3 +185,28 @@ Devuelve un listado de todas las asistencias registradas para un estudiante espe
 ## Documentación interactiva
 
 Accede a la documentación Swagger en [http://localhost:8002/docs](http://localhost:8002/docs) o ReDoc en [http://localhost:8002/redoc](http://localhost:8002/redoc).
+
+## Observabilidad y métricas
+
+El servicio expone métricas Prometheus para todos los endpoints, permitiendo monitoreo de:
+- Total de peticiones HTTP por endpoint y método
+- Latencia de cada petición
+- Total de errores HTTP (status >= 400)
+
+**Endpoint de métricas Prometheus:**
+```
+GET /asistencia/custom_metrics
+```
+
+Puedes consultar estas métricas desde Prometheus o navegando directamente al endpoint.
+
+## Pruebas unitarias
+
+Las pruebas unitarias se encuentran en `app/tests/test_asistencia.py` y cubren:
+- Casos exitosos y de error para todos los endpoints principales
+- Validaciones de datos y respuestas esperadas
+
+Para ejecutar los tests:
+```bash
+pytest app/tests/
+```
