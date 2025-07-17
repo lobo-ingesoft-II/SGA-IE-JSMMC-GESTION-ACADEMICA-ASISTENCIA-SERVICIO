@@ -38,7 +38,7 @@
 ### Corregido
 - Se hacen ajustes/correcciones en archivos routers/asistencia.py, services/asistencia.py y validaciones_externas.py
 
-## [1.0.5] - 2025-07-13
+## [1.0.5] - 2025-07-17
 ### Agregado
 - Implementación del middleware de observabilidad con Prometheus en `observabilidad/observabilidad.py`.
 - Decorador `@prometheus_metrics` aplicado a **todos los endpoints** del router de asistencia para recolectar métricas HTTP (conteo y duración).
