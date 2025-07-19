@@ -61,8 +61,7 @@ def get_db():
         db.close()
 
 @router.post("/", response_model=AsistenciaResponse, summary="Registrar asistencia", tags=["Asistencia"])
-
-def create(asistencia: AsistenciaCreate, db: Session = Depends(get_db), request: Request = None):
+async def create(asistencia: AsistenciaCreate, db: Session = Depends(get_db), request: Request = None):
     """
     Registra una nueva asistencia después de validar los datos externos.
     
@@ -84,10 +83,10 @@ def create(asistencia: AsistenciaCreate, db: Session = Depends(get_db), request:
     }
     ```
     """
-    return create_asistencia(db, asistencia)
+    return await create_asistencia(db, asistencia)
 
 @router.put("/{id_asistencia}", response_model=AsistenciaResponse, summary="Actualizar asistencia", tags=["Asistencia"])
-def update(id_asistencia: int, asistencia_update: AsistenciaUpdate, db: Session = Depends(get_db), request: Request = None):
+async def update(id_asistencia: int, asistencia_update: AsistenciaUpdate, db: Session = Depends(get_db), request: Request = None):
     """
     Actualiza un registro de asistencia existente.
     
@@ -120,7 +119,7 @@ def update(id_asistencia: int, asistencia_update: AsistenciaUpdate, db: Session 
     }
     ```
     """
-    return update_asistencia(db, id_asistencia, asistencia_update)
+    return await update_asistencia(db, id_asistencia, asistencia_update)
 
 @router.get("/{id_asistencia}", response_model=AsistenciaResponse, summary="Obtener asistencia por ID", tags=["Asistencia"])
 def get(id_asistencia: int, db: Session = Depends(get_db), request: Request = None):
