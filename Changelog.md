@@ -23,3 +23,45 @@
 - Se ajusta readme.
 ### Agregado
 - Adición de sección documentación interactiva.
+
+## [1.0.3] - 2025-07-05
+### Agregado
+- Endpoints para listar asistencias por estudiante, curso y fecha.
+- Validaciones externas para estudiante, profesor, curso y asignatura.
+- Mejor documentación Swagger en los endpoints.
+
+### Cambiado
+- Se mejoró la modularidad y separación de responsabilidades siguiendo SOFEA.
+- Se actualizó requirements.txt para incluir httpx.
+
+## [1.0.4] - 2025-07-07
+### Corregido
+- Se hacen ajustes/correcciones en archivos routers/asistencia.py, services/asistencia.py y validaciones_externas.py
+
+## [1.0.5] - 2025-07-17
+### Agregado
+- Implementación del middleware de observabilidad con Prometheus en `observabilidad/observabilidad.py`.
+- Decorador `@prometheus_metrics` aplicado a **todos los endpoints** del router de asistencia para recolectar métricas HTTP (conteo y duración).
+- Métricas exportadas en el endpoint `/metrics`.
+- Nuevas pruebas unitarias agregadas en `app/tests/test_asistencia.py`, cubriendo casos de éxito y error para creación, consulta individual, consulta múltiple, y endpoints adicionales.
+- Endpoint `/asistencia/valores-validos` documentado y probado, que devuelve los valores permitidos para el campo `presente`.
+- Se agregó documentación Swagger detallada en todos los endpoints, con ejemplos y respuestas esperadas.
+- Se refactorizó la validación externa para estudiante, profesor, curso y asignatura como funciones asíncronas.
+
+### Cambiado
+- Todos los endpoints ahora utilizan funciones `async def` para soportar mejor concurrencia y observabilidad.
+- El router `asistencia.py` fue modularizado según principios SOFEA, separando responsabilidades y mejorando la legibilidad del código.
+- Documentación enriquecida con descripciones y ejemplos para facilitar el uso de la API desde Swagger/OpenAPI.
+
+## [1.0.6] - 2025-07-17
+### Cambiado
+- Se refactorizó la implementación de observabilidad eliminando la carpeta `observabilidad/` y moviendo la funcionalidad directamente a los routers y al archivo main.py.
+- Se implementaron métricas de Prometheus directamente en el router de asistencia (`routers/asistencia.py`).
+- Se crearon contadores específicos para monitorear peticiones, latencia y errores HTTP.
+- Se agregó un middleware de métricas en `main.py` para capturar automáticamente todas las peticiones HTTP.
+- Se creó un nuevo endpoint `/asistencia/custom_metrics` para exponer las métricas de Prometheus específicas del servicio de asistencia.
+
+### Mejorado
+- Mejor integración de las métricas con los endpoints existentes.
+- Simplificación de la arquitectura al eliminar la capa adicional de observabilidad.
+- Monitoreo más detallado con métricas específicas para errores por código de estado.
