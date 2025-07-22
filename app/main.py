@@ -21,25 +21,16 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Asistencia API", lifespan=lifespan)
 
 # Configura los orígenes permitidos para CORS
-origins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:3001",  # Puerto alternativo común para desarrollo
-    "http://127.0.0.1:3001",
-    "http://localhost:8080",  # Puerto alternativo común
-    "http://127.0.0.1:8080",
-    # Agrega aquí los dominios de tu frontend en producción
-]
 
 # Configurar middleware CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],  # Permitir todas las orígenes
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["*"],
-    expose_headers=["*"],
+    allow_methods=["*"],  # Permitir todos los métodos HTTP
+    allow_headers=["*"],  # Permitir todos los encabezados
 )
+
 
 @app.middleware("http")
 async def metrics_middleware(request: Request, call_next):

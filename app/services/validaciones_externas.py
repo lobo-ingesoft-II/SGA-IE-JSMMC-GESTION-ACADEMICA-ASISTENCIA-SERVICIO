@@ -1,10 +1,10 @@
 import httpx
 from fastapi import HTTPException
 
-ASIGNATURAS_API_URL = "http://127.0.0.1:8001/asignaturas/"
-CURSOS_API_URL = "http://127.0.0.1:8004/cursos/"
-ESTUDIANTES_API_URL = "http://127.0.0.1:8005/estudiantes/"
-PROFESORES_API_URL = "http://127.0.0.1:8009/profesor/"
+ASIGNATURAS_API_URL = "http://sga-asignaturas-service:8001/asignaturas/"
+CURSOS_API_URL = "http://sga-cursos-service:8004/cursos/"
+ESTUDIANTES_API_URL = "http://sga-estudiantes-service:8005/estudiantes/"
+PROFESORES_API_URL = "http://sga-autenticacion-service:8009/profesor/"
 
 async def validar_asignatura(id_asignatura: int):
     async with httpx.AsyncClient() as client:
